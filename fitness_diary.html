@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Дневник отпуска · 1–11 мая</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F8F4EE;
+  --warm-white: #FDFAF6;
+  --ink: #1C1917;
+  --ink-soft: #44403C;
+  --ink-muted: #78716C;
+  --ink-hint: #A8A29E;
+  --accent: #C17D4A;
+  --accent-light: #F0E0CC;
+  --accent-pale: #FAF3EA;
+  --teal: #3D7A72;
+  --teal-light: #D0EAE6;
+  --rose: #C4556A;
+  --rose-light: #FAE0E5;
+  --violet: #6B5EA8;
+  --violet-light: #E8E4F5;
+  --gold: #B8952A;
+  --gold-light: #F5EDD0;
+  --border: rgba(28,25,23,0.1);
+  --shadow: 0 2px 20px rgba(28,25,23,0.06);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── HEADER ── */
+.app-header {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 32px 24px 28px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.app-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  margin-bottom: 4px;
+}
+.app-header .subtitle {
+  font-size: 12px;
+  color: var(--ink-hint);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.header-stats {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.hstat { text-align: center; }
+.hstat-val { font-size: 20px; font-weight: 500; color: var(--accent-light); }
+.hstat-lbl { font-size: 10px; color: var(--ink-hint); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
+
+/* ── TABS ── */
+.tabs {
+  display: flex;
+  background: var(--warm-white);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  position: sticky;
+  top: 120px;
+  z-index: 90;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex: 0 0 auto;
+  padding: 14px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+  user-select: none;
+}
+.tab:hover { color: var(--ink); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+  margin-bottom: 1px;
+}
+
+/* ── MAIN ── */
+.main { max-width: 780px; margin: 0 auto; padding: 24px 16px 60px; }
+
+/* ── SECTION ── */
+.section { display: none; }
+.section.active { display: block; }
+
+/* ── OVERVIEW ── */
+.overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+.stat-card {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+}
+.stat-card .label { font-size: 11px; color: var(--ink-hint); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+.stat-card .value { font-size: 22px; font-weight: 500; color: var(--ink); }
+.stat-card .sub { font-size: 12px; color: var(--ink-muted); margin-top: 4px; }
+.stat-card.accent-card { background: var(--ink); }
+.stat-card.accent-card .label { color: var(--ink-hint); }
+.stat-card.accent-card .value { color: var(--accent-light); }
+.stat-card.accent-card .sub { color: var(--ink-muted); }
+
+.week-plan {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.week-plan-title {
+  padding: 16px 20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink);
+}
+.day-row {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.day-row:last-child { border-bottom: none; }
+.day-row:hover { background: var(--cream); }
+.day-date { font-size: 12px; color: var(--ink-muted); font-weight: 500; }
+.day-info { }
+.day-name { font-size: 14px; font-weight: 500; color: var(--ink); }
+.day-type { font-size: 12px; color: var(--ink-hint); margin-top: 1px; }
+.day-badge-sm {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 99px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.b-strength { background: var(--violet-light); color: var(--violet); }
+.b-pilates { background: var(--rose-light); color: var(--rose); }
+.b-cardio { background: var(--gold-light); color: var(--gold); }
+.b-rest { background: var(--teal-light); color: var(--teal); }
+.b-combo { background: var(--accent-light); color: var(--accent); }
+
+/* ── DAY DETAIL ── */
+.day-header-bar {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.day-circle {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.day-circle.strength { background: var(--violet-light); color: var(--violet); }
+.day-circle.pilates { background: var(--rose-light); color: var(--rose); }
+.day-circle.cardio { background: var(--gold-light); color: var(--gold); }
+.day-circle.rest { background: var(--teal-light); color: var(--teal); }
+.day-circle.combo { background: var(--accent-light); color: var(--accent); }
+.day-header-info h2 { font-size: 18px; font-weight: 500; }
+.day-header-info .day-meta { font-size: 13px; color: var(--ink-muted); margin-top: 2px; }
+
+.card {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+.card-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card-header-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.card-title { font-size: 14px; font-weight: 500; color: var(--ink); }
+.card-body { padding: 16px 18px; }
+
+.exercise-list { list-style: none; }
+.exercise-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+}
+.exercise-item:last-child { border-bottom: none; }
+.ex-name { font-size: 14px; color: var(--ink); }
+.ex-sets { font-size: 13px; color: var(--ink-muted); font-weight: 500; white-space: nowrap; }
+
+.meal-list { }
+.meal-item {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 100px 1fr 52px;
+  gap: 8px;
+  align-items: start;
+}
+.meal-item:last-child { border-bottom: none; }
+.meal-time-lbl { font-size: 11px; color: var(--ink-hint); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; padding-top: 2px; }
+.meal-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+.meal-kcal-lbl { font-size: 12px; color: var(--ink-muted); text-align: right; padding-top: 2px; }
+.meal-total-row {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 12px;
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+.meal-total-row strong { color: var(--accent); margin-left: 6px; }
+
+/* ── DIARY ── */
+.diary-day { margin-bottom: 16px; }
+.diary-date-label {
+  font-size: 12px;
+  color: var(--ink-hint);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  padding-left: 4px;
+}
+.diary-card {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+}
+.diary-row { margin-bottom: 14px; }
+.diary-label { font-size: 11px; color: var(--ink-hint); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.diary-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.metric-box {
+  background: var(--cream);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+.metric-box label { display: block; font-size: 10px; color: var(--ink-hint); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.metric-box input {
+  width: 100%;
+  text-align: center;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink);
+  outline: none;
+  font-family: 'DM Sans', sans-serif;
+  -moz-appearance: textfield;
+}
+.metric-box input::-webkit-outer-spin-button,
+.metric-box input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.metric-box input::placeholder { color: var(--ink-hint); font-weight: 300; }
+
+.diary-checks { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.check-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--ink-muted);
+  transition: all 0.15s;
+  user-select: none;
+}
+.check-pill:hover { border-color: var(--accent); color: var(--ink); }
+.check-pill.checked { background: var(--accent-light); border-color: var(--accent); color: var(--accent); font-weight: 500; }
+.check-pill .pill-icon { font-size: 14px; }
+
+textarea.diary-note {
+  width: 100%;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  resize: vertical;
+  min-height: 80px;
+  outline: none;
+  transition: border-color 0.15s;
+  line-height: 1.6;
+}
+textarea.diary-note:focus { border-color: var(--accent); }
+textarea.diary-note::placeholder { color: var(--ink-hint); }
+
+.save-btn {
+  width: 100%;
+  padding: 13px;
+  background: var(--ink);
+  color: var(--cream);
+  border: none;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-top: 4px;
+}
+.save-btn:hover { background: #2C2825; }
+.save-btn:active { transform: scale(0.99); }
+.saved-msg { text-align: center; font-size: 12px; color: var(--teal); margin-top: 8px; opacity: 0; transition: opacity 0.3s; }
+.saved-msg.show { opacity: 1; }
+
+/* ── MEASUREMENTS ── */
+.meas-card {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.meas-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+.meas-sub { font-size: 12px; color: var(--ink-muted); margin-bottom: 20px; }
+.meas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.meas-field label { display: block; font-size: 11px; color: var(--ink-hint); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.meas-field input {
+  width: 100%;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.meas-field input:focus { border-color: var(--accent); }
+
+.progress-bar-wrap { margin-top: 20px; }
+.pb-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-muted); margin-bottom: 6px; }
+.pb-track { height: 6px; background: var(--cream); border-radius: 99px; overflow: hidden; }
+.pb-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width 0.4s; }
+
+.tip-strip {
+  background: var(--accent-pale);
+  border: 1px solid var(--accent-light);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+.tip-strip strong { color: var(--accent); }
+
+/* ── NUTRITION SUMMARY ── */
+.nut-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+.nut-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 14px; padding: 14px; text-align: center; }
+.nut-val { font-size: 20px; font-weight: 500; margin-bottom: 2px; }
+.nut-lbl { font-size: 10px; color: var(--ink-hint); text-transform: uppercase; letter-spacing: 0.08em; }
+.nut-val.kcal { color: var(--accent); }
+.nut-val.protein { color: var(--violet); }
+.nut-val.fat { color: var(--gold); }
+.nut-val.carb { color: var(--teal); }
+
+.rule-list { }
+.rule-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+.rule-item:last-child { border-bottom: none; }
+.rule-num {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 500;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.rule-text { font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+.rule-text strong { color: var(--ink); }
+
+/* ── BACK BTN ── */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--ink-muted);
+  cursor: pointer;
+  margin-bottom: 16px;
+  padding: 6px 0;
+  transition: color 0.15s;
+}
+.back-btn:hover { color: var(--ink); }
+
+/* water tracker */
+.water-track { display: flex; gap: 6px; flex-wrap: wrap; }
+.water-drop {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--cream);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  transition: all 0.15s;
+  user-select: none;
+}
+.water-drop.filled { background: #D0EAE6; border-color: var(--teal); }
+
+/* mood */
+.mood-row { display: flex; gap: 8px; }
+.mood-btn {
+  flex: 1;
+  padding: 8px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--cream);
+  cursor: pointer;
+  text-align: center;
+  font-size: 20px;
+  transition: all 0.15s;
+  user-select: none;
+}
+.mood-btn:hover { border-color: var(--accent); }
+.mood-btn.selected { border-color: var(--accent); background: var(--accent-pale); }
+
+.emoji-lbl { font-size: 10px; color: var(--ink-hint); margin-top: 3px; }
+
+@media (max-width: 480px) {
+  .nut-grid { grid-template-columns: repeat(2, 1fr); }
+  .overview-grid { grid-template-columns: 1fr; }
+  .meas-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <h1>Мой дневник отпуска</h1>
+  <div class="subtitle">Фитнес · Питание · Прогресс</div>
+  <div class="header-stats">
+    <div class="hstat"><div class="hstat-val">1–11</div><div class="hstat-lbl">Мая</div></div>
+    <div class="hstat"><div class="hstat-val">11</div><div class="hstat-lbl">Дней</div></div>
+    <div class="hstat"><div class="hstat-val" id="h-kcal">1450</div><div class="hstat-lbl">Ккал/день</div></div>
+    <div class="hstat"><div class="hstat-val" id="h-goal">57–58</div><div class="hstat-lbl">Цель кг</div></div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('overview')"><span class="tab-dot" style="background:#C17D4A"></span>Обзор</div>
+  <div class="tab" onclick="showTab('days')"><span class="tab-dot" style="background:#6B5EA8"></span>Тренировки</div>
+  <div class="tab" onclick="showTab('nutrition')"><span class="tab-dot" style="background:#3D7A72"></span>Питание</div>
+  <div class="tab" onclick="showTab('diary')"><span class="tab-dot" style="background:#C4556A"></span>Дневник</div>
+  <div class="tab" onclick="showTab('measurements')"><span class="tab-dot" style="background:#B8952A"></span>Замеры</div>
+</div>
+
+<div class="main">
+
+<!-- ═══ OVERVIEW ═══ -->
+<div class="section active" id="tab-overview">
+  <div class="overview-grid">
+    <div class="stat-card accent-card">
+      <div class="label">Стартовый вес</div>
+      <div class="value">60.5 кг</div>
+      <div class="sub">169 см · ИМТ 21.2</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Цель к 1 июня</div>
+      <div class="value">57–58 кг</div>
+      <div class="sub">−2.5–3.5 кг реально</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Калорийность</div>
+      <div class="value">1400–1500</div>
+      <div class="sub">ккал в день</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Белок в день</div>
+      <div class="value">100–110 г</div>
+      <div class="sub">защита мышц</div>
+    </div>
+  </div>
+
+  <div class="week-plan">
+    <div class="week-plan-title">Расписание 11 дней</div>
+    <div class="day-row" onclick="openDay(0)">
+      <div class="day-date">1 мая · чт</div>
+      <div class="day-info"><div class="day-name">День 1</div><div class="day-type">Силовая A — низ тела</div></div>
+      <span class="day-badge-sm b-strength">Силовая</span>
+    </div>
+    <div class="day-row" onclick="openDay(1)">
+      <div class="day-date">2 мая · пт</div>
+      <div class="day-info"><div class="day-name">День 2</div><div class="day-type">Кардио + прогулка</div></div>
+      <span class="day-badge-sm b-cardio">Кардио</span>
+    </div>
+    <div class="day-row" onclick="openDay(2)">
+      <div class="day-date">3 мая · сб</div>
+      <div class="day-info"><div class="day-name">День 3</div><div class="day-type">Пилатес</div></div>
+      <span class="day-badge-sm b-pilates">Пилатес</span>
+    </div>
+    <div class="day-row" onclick="openDay(3)">
+      <div class="day-date">4 мая · вс</div>
+      <div class="day-info"><div class="day-name">День 4</div><div class="day-type">Силовая B — верх + кор</div></div>
+      <span class="day-badge-sm b-strength">Силовая</span>
+    </div>
+    <div class="day-row" onclick="openDay(4)">
+      <div class="day-date">5 мая · пн</div>
+      <div class="day-info"><div class="day-name">День 5</div><div class="day-type">Активный отдых</div></div>
+      <span class="day-badge-sm b-rest">Отдых</span>
+    </div>
+    <div class="day-row" onclick="openDay(5)">
+      <div class="day-date">6 мая · вт</div>
+      <div class="day-info"><div class="day-name">День 6</div><div class="day-type">Силовая C + пилатес</div></div>
+      <span class="day-badge-sm b-combo">Комбо</span>
+    </div>
+    <div class="day-row" onclick="openDay(6)">
+      <div class="day-date">7 мая · ср</div>
+      <div class="day-info"><div class="day-name">День 7</div><div class="day-type">Кардио + степпер</div></div>
+      <span class="day-badge-sm b-cardio">Кардио</span>
+    </div>
+    <div class="day-row" onclick="openDay(7)">
+      <div class="day-date">8 мая · чт</div>
+      <div class="day-info"><div class="day-name">День 8</div><div class="day-type">Пилатес</div></div>
+      <span class="day-badge-sm b-pilates">Пилатес</span>
+    </div>
+    <div class="day-row" onclick="openDay(8)">
+      <div class="day-date">9 мая · пт</div>
+      <div class="day-info"><div class="day-name">День 9</div><div class="day-type">Силовая A — низ тела</div></div>
+      <span class="day-badge-sm b-strength">Силовая</span>
+    </div>
+    <div class="day-row" onclick="openDay(9)">
+      <div class="day-date">10 мая · сб</div>
+      <div class="day-info"><div class="day-name">День 10</div><div class="day-type">Активный отдых + прогулка</div></div>
+      <span class="day-badge-sm b-rest">Отдых</span>
+    </div>
+    <div class="day-row" onclick="openDay(10)">
+      <div class="day-date">11 мая · вс</div>
+      <div class="day-info"><div class="day-name">День 11 — финал</div><div class="day-type">Силовая B + пилатес</div></div>
+      <span class="day-badge-sm b-combo">Финал</span>
+    </div>
+  </div>
+
+  <div class="tip-strip">
+    <strong>Главное правило отпуска:</strong> не пропускать завтрак, ужин не позже 20:00, 2 л воды в день. Вес замерять только утром натощак, раз в 3–4 дня.
+  </div>
+</div>
+
+<!-- ═══ DAYS DETAIL ═══ -->
+<div class="section" id="tab-days">
+  <div id="days-list">
+    <p style="font-size:14px; color:var(--ink-muted); text-align:center; padding: 40px 0;">Нажмите на день в разделе «Обзор» чтобы открыть детали</p>
+  </div>
+  <div id="day-detail" style="display:none;"></div>
+</div>
+
+<!-- ═══ NUTRITION ═══ -->
+<div class="section" id="tab-nutrition">
+  <div class="nut-grid">
+    <div class="nut-card"><div class="nut-val kcal">1450</div><div class="nut-lbl">Ккал</div></div>
+    <div class="nut-card"><div class="nut-val protein">105 г</div><div class="nut-lbl">Белок</div></div>
+    <div class="nut-card"><div class="nut-val fat">48 г</div><div class="nut-lbl">Жиры</div></div>
+    <div class="nut-card"><div class="nut-val carb">145 г</div><div class="nut-lbl">Углеводы</div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px;">
+    <div class="card-header"><div class="card-header-icon" style="background:var(--accent-light); font-size:16px;">🌅</div><div class="card-title">Завтраки (чередовать)</div></div>
+    <div class="card-body">
+      <ul class="exercise-list">
+        <li class="exercise-item"><span class="ex-name">Омлет 2 яйца + овощи + хлебец ржаной</span><span class="ex-sets">~370 кк</span></li>
+        <li class="exercise-item"><span class="ex-name">Овсянка 40г + ягоды + 1 ч.л. орехов</span><span class="ex-sets">~320 кк</span></li>
+        <li class="exercise-item"><span class="ex-name">Творог 5% 150г + фрукт + корица</span><span class="ex-sets">~290 кк</span></li>
+        <li class="exercise-item"><span class="ex-name">2 яйца всмятку + авокадо ¼ + хлебец</span><span class="ex-sets">~400 кк</span></li>
+        <li class="exercise-item"><span class="ex-name">Творожная запеканка (творог + яйцо + хлопья)</span><span class="ex-sets">~360 кк</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px;">
+    <div class="card-header"><div class="card-header-icon" style="background:var(--teal-light); font-size:16px;">☀️</div><div class="card-title">Обеды</div></div>
+    <div class="card-body">
+      <ul class="exercise-list">
+        <li class="exercise-item"><span class="ex-name">Куриная грудка 150г + гречка 50г + салат</span><span class="ex-sets">~460 кк</span></li>
+        <li class="exercise-item"><span class="ex-name">Лосось/скумбрия 130г + булгур + огурец</span><span class="ex-sets">~470 кк</span></li>
+        <li class="exercise-item"><span class="ex-name">Говядина отварная 130г + бурый рис 50г</span><span class="ex-sets">~480 кк</span></li>
+        <li class="exercise-item"><span class="ex-name">Куриный суп без картофеля + овощи</span><span class="ex-sets">~350 кк</span></li>
+        <li class="exercise-item"><span class="ex-name">Индейка 150г + булгур + тушёные овощи</span><span class="ex-sets">~450 кк</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px;">
+    <div class="card-header"><div class="card-header-icon" style="background:var(--rose-light); font-size:16px;">🍎</div><div class="card-title">Перекусы</div></div>
+    <div class="card-body">
+      <ul class="exercise-list">
+        <li class="exercise-item"><span class="ex-name">Греческий йогурт 2% 150г + яблоко</span><span class="ex-sets">~160 кк</span></li>
+        <li class="exercise-item"><span class="ex-name">15г миндаля + груша</span><span class="ex-sets">~160 кк</span></li>
+        <li class="exercise-item"><span class="ex-name">Морковь + хумус 2 ст.л.</span><span class="ex-sets">~140 кк</span></li>
+        <li class="exercise-item"><span class="ex-name">Йогурт 150г + семена чиа + ягоды</span><span class="ex-sets">~170 кк</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px;">
+    <div class="card-header"><div class="card-header-icon" style="background:var(--violet-light); font-size:16px;">🌙</div><div class="card-title">Ужины (лёгкие)</div></div>
+    <div class="card-body">
+      <ul class="exercise-list">
+        <li class="exercise-item"><span class="ex-name">Рыба запечённая 150г + брокколи + зелень</span><span class="ex-sets">~310 кк</span></li>
+        <li class="exercise-item"><span class="ex-name">Творог 5% 200г + огурец + зелень</span><span class="ex-sets">~280 кк</span></li>
+        <li class="exercise-item"><span class="ex-name">Куриная грудка 140г + брокколи на пару</span><span class="ex-sets">~300 кк</span></li>
+        <li class="exercise-item"><span class="ex-name">Омлет 2 яйца + тушёная брокколи</span><span class="ex-sets">~280 кк</span></li>
+        <li class="exercise-item"><span class="ex-name">Индейка 140г + тушёные кабачки</span><span class="ex-sets">~360 кк</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-header-icon" style="background:var(--gold-light); font-size:16px;">📋</div><div class="card-title">Правила питания в отпуске</div></div>
+    <div class="card-body">
+      <div class="rule-list">
+        <div class="rule-item"><div class="rule-num">1</div><div class="rule-text"><strong>Не пропускать завтрак</strong> — иначе к обеду переедите</div></div>
+        <div class="rule-item"><div class="rule-num">2</div><div class="rule-text"><strong>Ужин не позже 20:00</strong> — правило без исключений</div></div>
+        <div class="rule-item"><div class="rule-num">3</div><div class="rule-text"><strong>2 л воды в день</strong> — поставьте бутылку на видное место</div></div>
+        <div class="rule-item"><div class="rule-num">4</div><div class="rule-text"><strong>Убрать на 11 дней:</strong> сахар, выпечку, алкоголь, соусы, соки, белый хлеб</div></div>
+        <div class="rule-item"><div class="rule-num">5</div><div class="rule-text"><strong>Тренировочные дни</strong> — до 1500 ккал, <strong>дни отдыха</strong> — 1400 ккал</div></div>
+        <div class="rule-item"><div class="rule-num">6</div><div class="rule-text"><strong>Белок в каждом приёме</strong> — яйца, мясо, рыба, творог, йогурт</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DIARY ═══ -->
+<div class="section" id="tab-diary">
+  <div class="tip-strip">
+    Записывайте самочувствие, отмечайте выполненные задачи и следите за водой. Данные сохраняются в вашем браузере.
+  </div>
+  <div id="diary-container"></div>
+</div>
+
+<!-- ═══ MEASUREMENTS ═══ -->
+<div class="section" id="tab-measurements">
+  <div class="meas-card">
+    <div class="meas-title">Стартовые замеры</div>
+    <div class="meas-sub">Заполните до начала отпуска — 1 мая утром натощак</div>
+    <div class="meas-grid">
+      <div class="meas-field"><label>Вес (кг)</label><input type="number" step="0.1" placeholder="60.5" id="m-weight-start" onchange="saveMeas()"></div>
+      <div class="meas-field"><label>Талия (см)</label><input type="number" step="0.5" placeholder="—" id="m-waist-start" onchange="saveMeas()"></div>
+      <div class="meas-field"><label>Бёдра (см)</label><input type="number" step="0.5" placeholder="—" id="m-hips-start" onchange="saveMeas()"></div>
+      <div class="meas-field"><label>Грудь (см)</label><input type="number" step="0.5" placeholder="—" id="m-chest-start" onchange="saveMeas()"></div>
+    </div>
+  </div>
+
+  <div class="meas-card">
+    <div class="meas-title">Финальные замеры</div>
+    <div class="meas-sub">11 мая утром — после последней тренировки</div>
+    <div class="meas-grid">
+      <div class="meas-field"><label>Вес (кг)</label><input type="number" step="0.1" placeholder="—" id="m-weight-end" onchange="updateProgress()"></div>
+      <div class="meas-field"><label>Талия (см)</label><input type="number" step="0.5" placeholder="—" id="m-waist-end" onchange="saveMeas()"></div>
+      <div class="meas-field"><label>Бёдра (см)</label><input type="number" step="0.5" placeholder="—" id="m-hips-end" onchange="saveMeas()"></div>
+      <div class="meas-field"><label>Грудь (см)</label><input type="number" step="0.5" placeholder="—" id="m-chest-end" onchange="saveMeas()"></div>
+    </div>
+
+    <div class="progress-bar-wrap" id="progress-section" style="display:none;">
+      <div class="pb-label"><span>Прогресс по весу</span><span id="progress-text"></span></div>
+      <div class="pb-track"><div class="pb-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="meas-card">
+    <div class="meas-title">Промежуточные взвешивания</div>
+    <div class="meas-sub">Раз в 3–4 дня, утром натощак</div>
+    <div class="meas-grid">
+      <div class="meas-field"><label>4 мая</label><input type="number" step="0.1" placeholder="—" id="m-w4" onchange="saveMeas()"></div>
+      <div class="meas-field"><label>7 мая</label><input type="number" step="0.1" placeholder="—" id="m-w7" onchange="saveMeas()"></div>
+      <div class="meas-field"><label>10 мая</label><input type="number" step="0.1" placeholder="—" id="m-w10" onchange="saveMeas()"></div>
+      <div class="meas-field"><label>11 мая</label><input type="number" step="0.1" placeholder="—" id="m-w11" onchange="saveMeas()"></div>
+    </div>
+  </div>
+
+  <div class="tip-strip">
+    <strong>Важно:</strong> вес может не меняться 3–4 дня, а потом резко упасть. Это нормально. Ориентируйтесь на объёмы и самочувствие, не только на цифру на весах.
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+const DAYS_DATA = [
+  {
+    date: "1 мая · четверг", label: "День 1", type: "strength",
+    typeLabel: "Силовая A — низ тела", typeClass: "strength",
+    exercises: [
+      { name: "Зарядка (ваша)", sets: "10–15 мин" },
+      { name: "Приседания с гантелями", sets: "3 × 15" },
+      { name: "Выпады назад (чередуя ноги)", sets: "3 × 12 каждая" },
+      { name: "Ягодичный мост со штангой", sets: "4 × 20" },
+      { name: "Сумо-приседания + резинка", sets: "3 × 15" },
+      { name: "Планка классическая", sets: "3 × 45 сек" },
+      { name: "Степпер с эспандерами", sets: "15 мин" },
+      { name: "Ролик для пресса (с колен)", sets: "3 × 8" },
+    ],
+    meals: [
+      { time: "8:00 Завтрак", food: "Омлет 2 яйца + овощи (перец, помидор) + ржаной хлебец + кофе без сахара", kcal: 390 },
+      { time: "13:00 Обед", food: "Куриная грудка 150г + гречка 50г сухого + салат с оливковым маслом 1 ч.л.", kcal: 460 },
+      { time: "16:00 Перекус", food: "Греческий йогурт 2% 150г + яблоко", kcal: 160 },
+      { time: "19:30 Ужин", food: "Рыба запечённая (треска/хек) 150г + тушёная брокколи + зелень", kcal: 310 },
+      { time: "21:00 Доп.", food: "Творог 5% 100г (если голодна)", kcal: 120 },
+    ]
+  },
+  {
+    date: "2 мая · пятница", label: "День 2", type: "cardio",
+    typeLabel: "Кардио + прогулка", typeClass: "cardio",
+    exercises: [
+      { name: "Зарядка", sets: "10–15 мин" },
+      { name: "Скакалка интервалами", sets: "3 × 3 мин" },
+      { name: "Прогулка быстрым шагом", sets: "50–60 мин" },
+      { name: "Массаж роликом", sets: "10 мин" },
+    ],
+    meals: [
+      { time: "8:00 Завтрак", food: "Овсянка 40г на воде + горсть ягод + 1 ч.л. мёда + чай", kcal: 320 },
+      { time: "13:00 Обед", food: "Лосось/скумбрия 130г + булгур 50г + огурец + зелень", kcal: 470 },
+      { time: "16:00 Перекус", food: "15г миндаля + 1 груша", kcal: 160 },
+      { time: "19:30 Ужин", food: "Творог 5% 200г + огурец + зелень + 1 ч.л. оливкового масла", kcal: 280 },
+      { time: "21:00 Доп.", food: "Кефир 1% 200мл", kcal: 70 },
+    ]
+  },
+  {
+    date: "3 мая · суббота", label: "День 3", type: "pilates",
+    typeLabel: "Пилатес", typeClass: "pilates",
+    exercises: [
+      { name: "Зарядка", sets: "10–15 мин" },
+      { name: "Пилатес для начинающих", sets: "45–60 мин" },
+      { name: "Растяжка + массажный ролик", sets: "10 мин" },
+      { name: "Вечерняя прогулка", sets: "30 мин" },
+    ],
+    meals: [
+      { time: "8:30 Завтрак", food: "Творожная запеканка (творог 150г + яйцо + хлопья 2 ст.л.) + чай", kcal: 360 },
+      { time: "13:00 Обед", food: "Куриный суп без картофеля (грудка 100г + овощи + цельнозерновая вермишель 30г)", kcal: 350 },
+      { time: "16:00 Перекус", food: "Греческий йогурт 150г + 1 ч.л. семян чиа + ягоды", kcal: 170 },
+      { time: "19:30 Ужин", food: "Индейка/курица 140г + тушёные овощи (кабачок, баклажан) + зелень", kcal: 320 },
+      { time: "21:00 Доп.", food: "Творог 5% 100г", kcal: 120 },
+    ]
+  },
+  {
+    date: "4 мая · воскресенье", label: "День 4", type: "strength",
+    typeLabel: "Силовая B — верх + кор", typeClass: "strength",
+    exercises: [
+      { name: "Зарядка", sets: "10–15 мин" },
+      { name: "Отжимания (с колен/классика)", sets: "4 × 12" },
+      { name: "Тяга гантели к поясу в наклоне", sets: "3 × 12 каждая" },
+      { name: "Жим гантелей лёжа", sets: "3 × 12" },
+      { name: "Скакалка", sets: "2 × 2 мин" },
+      { name: "Скручивания на пресс", sets: "3 × 15" },
+      { name: "Подъём ног лёжа", sets: "3 × 15" },
+      { name: "Степпер с эспандерами", sets: "15 мин" },
+    ],
+    meals: [
+      { time: "8:00 Завтрак", food: "2 яйца всмятку + авокадо ¼ шт + ржаной хлебец + кофе", kcal: 400 },
+      { time: "13:00 Обед", food: "Говядина/телятина отварная 130г + бурый рис 50г + свежий салат", kcal: 480 },
+      { time: "16:00 Перекус", food: "Морковь 2 шт + хумус 2 ст.л.", kcal: 150 },
+      { time: "19:30 Ужин", food: "Рыба запечённая 150г + шпинат тушёный + помидоры черри", kcal: 300 },
+      { time: "21:00 Доп.", food: "Творог 5% 100г + корица", kcal: 110 },
+    ]
+  },
+  {
+    date: "5 мая · понедельник", label: "День 5", type: "rest",
+    typeLabel: "Активный отдых", typeClass: "rest",
+    exercises: [
+      { name: "Зарядка", sets: "10–15 мин" },
+      { name: "Прогулка", sets: "40–50 мин" },
+      { name: "Растяжка + массажный ролик", sets: "15 мин" },
+      { name: "Восстановление мышц", sets: "весь день" },
+    ],
+    meals: [
+      { time: "8:30 Завтрак", food: "Гречневая каша на воде 50г + яйцо варёное 1 шт + огурец + чай", kcal: 330 },
+      { time: "13:00 Обед", food: "Куриная грудка 150г + овощной салат (помидор, огурец, перец, зелень, масло 1 ч.л.)", kcal: 380 },
+      { time: "16:00 Перекус", food: "Яблоко + 10г грецких орехов", kcal: 140 },
+      { time: "19:30 Ужин", food: "Омлет 2 яйца + брокколи тушёная + зелень", kcal: 280 },
+      { time: "21:00 Доп.", food: "Кефир 1% 200мл", kcal: 70 },
+    ]
+  },
+  {
+    date: "6 мая · вторник", label: "День 6", type: "combo",
+    typeLabel: "Силовая C + пилатес", typeClass: "combo",
+    exercises: [
+      { name: "Зарядка", sets: "10–15 мин" },
+      { name: "Круговая: приседания 15", sets: "3 круга" },
+      { name: "Круговая: отжимания 10", sets: "3 круга" },
+      { name: "Круговая: ягодичный мост 20", sets: "3 круга" },
+      { name: "Круговая: берпи упрощённые 8", sets: "3 круга" },
+      { name: "Пилатес для начинающих (вечер)", sets: "45 мин" },
+      { name: "Ролик для пресса", sets: "3 × 10" },
+    ],
+    meals: [
+      { time: "8:00 Завтрак", food: "Овсянка 40г + творог 80г + банан ½ (углеводы перед тренировкой)", kcal: 420 },
+      { time: "13:00 Обед", food: "Лосось 130г + гречка 50г + салат из свежих овощей", kcal: 470 },
+      { time: "16:00 Перекус", food: "Греческий йогурт 150г + горсть черники", kcal: 160 },
+      { time: "19:30 Ужин", food: "Творог 5% 200г + огурец + зелень + 1 ч.л. масла", kcal: 290 },
+      { time: "21:00 Доп.", food: "Кефир 1% 150мл", kcal: 55 },
+    ]
+  },
+  {
+    date: "7 мая · среда", label: "День 7", type: "cardio",
+    typeLabel: "Кардио + степпер", typeClass: "cardio",
+    exercises: [
+      { name: "Зарядка", sets: "10–15 мин" },
+      { name: "Скакалка интервалами", sets: "4 × 3 мин" },
+      { name: "Степпер с эспандерами", sets: "20 мин" },
+      { name: "Прогулка быстрым шагом", sets: "40–50 мин" },
+    ],
+    meals: [
+      { time: "8:00 Завтрак", food: "Яичница 2 яйца + помидор + ржаной хлебец + кофе", kcal: 350 },
+      { time: "13:00 Обед", food: "Индейка отварная 150г + булгур 50г + тушёные овощи", kcal: 450 },
+      { time: "16:00 Перекус", food: "Груша + 15г миндаля", kcal: 160 },
+      { time: "19:30 Ужин", food: "Хек/треска запечённая 160г + шпинат + лимон + зелень", kcal: 290 },
+      { time: "21:00 Доп.", food: "Творог 5% 100г", kcal: 110 },
+    ]
+  },
+  {
+    date: "8 мая · четверг", label: "День 8", type: "pilates",
+    typeLabel: "Пилатес", typeClass: "pilates",
+    exercises: [
+      { name: "Зарядка", sets: "10–15 мин" },
+      { name: "Пилатес для начинающих", sets: "45–60 мин" },
+      { name: "Растяжка", sets: "10 мин" },
+      { name: "Вечерняя прогулка", sets: "30 мин" },
+    ],
+    meals: [
+      { time: "8:30 Завтрак", food: "Творог 5% 150г + 1 ст.л. мёда + горсть ягод + чай", kcal: 340 },
+      { time: "13:00 Обед", food: "Куриный бульон с овощами + грудка 130г + салат", kcal: 400 },
+      { time: "16:00 Перекус", food: "Яблоко + йогурт натуральный 100г", kcal: 160 },
+      { time: "19:30 Ужин", food: "Говядина тушёная 130г + тушёные кабачки + зелень", kcal: 360 },
+      { time: "21:00 Доп.", food: "Кефир 1% 200мл", kcal: 70 },
+    ]
+  },
+  {
+    date: "9 мая · пятница", label: "День 9", type: "strength",
+    typeLabel: "Силовая A — низ тела", typeClass: "strength",
+    exercises: [
+      { name: "Зарядка", sets: "10–15 мин" },
+      { name: "Приседания со штангой", sets: "4 × 15" },
+      { name: "Румынская тяга с гантелями", sets: "3 × 12" },
+      { name: "Ягодичный мост + резинка", sets: "4 × 20" },
+      { name: "Степпер с эспандерами", sets: "20 мин" },
+      { name: "Ролик для пресса", sets: "3 × 10" },
+    ],
+    meals: [
+      { time: "8:00 Завтрак", food: "Омлет 2 яйца + шпинат + помидор + хлебец + кофе", kcal: 380 },
+      { time: "13:00 Обед", food: "Лосось/семга 130г + бурый рис 50г + свежий салат с маслом", kcal: 490 },
+      { time: "16:00 Перекус", food: "Греческий йогурт 2% 150г + 1 ч.л. семян льна", kcal: 150 },
+      { time: "19:30 Ужин", food: "Куриная грудка 140г + брокколи на пару + зелень + лимон", kcal: 300 },
+      { time: "21:00 Доп.", food: "Творог 5% 100г + корица", kcal: 110 },
+    ]
+  },
+  {
+    date: "10 мая · суббота", label: "День 10", type: "rest",
+    typeLabel: "Активный отдых + прогулка", typeClass: "rest",
+    exercises: [
+      { name: "Зарядка", sets: "10–15 мин" },
+      { name: "Длинная прогулка", sets: "60–70 мин" },
+      { name: "Растяжка + массажный ролик", sets: "15 мин" },
+    ],
+    meals: [
+      { time: "8:30 Завтрак", food: "Гречка 50г + яйца варёные 2 шт + огурец + чай", kcal: 360 },
+      { time: "13:00 Обед", food: "Запечённая курица 150г + тушёные овощи (болгарский перец, кабачок)", kcal: 380 },
+      { time: "16:00 Перекус", food: "Морковь + хумус 2 ст.л. + яблоко", kcal: 160 },
+      { time: "19:30 Ужин", food: "Творог 5% 200г + огурец + помидоры черри + зелень", kcal: 270 },
+      { time: "21:00 Доп.", food: "Кефир 1% 200мл", kcal: 70 },
+    ]
+  },
+  {
+    date: "11 мая · воскресенье", label: "День 11 — финал", type: "combo",
+    typeLabel: "Силовая B + пилатес", typeClass: "combo",
+    exercises: [
+      { name: "Зарядка", sets: "10–15 мин" },
+      { name: "Отжимания 4×12", sets: "Силовая B" },
+      { name: "Тяга гантели к поясу 3×12", sets: "Силовая B" },
+      { name: "Жим гантелей лёжа 3×12", sets: "Силовая B" },
+      { name: "Скручивания + подъём ног 3×15", sets: "Силовая B" },
+      { name: "Пилатес для начинающих", sets: "45 мин" },
+      { name: "Финальный замер веса и объёмов", sets: "утром натощак" },
+    ],
+    meals: [
+      { time: "8:00 Завтрак", food: "Овсянка 40г + яйцо варёное + ягоды + кофе", kcal: 380 },
+      { time: "13:00 Обед", food: "Индейка 150г + гречка 50г + свежий салат + масло 1 ч.л.", kcal: 470 },
+      { time: "16:00 Перекус", food: "Греческий йогурт 150г + горсть орехов 10г", kcal: 180 },
+      { time: "19:30 Ужин", food: "Рыба запечённая 150г + брокколи + шпинат + зелень", kcal: 310 },
+      { time: "21:00 Доп.", food: "Творог 5% 100г — финальный белковый вечер", kcal: 110 },
+    ]
+  },
+];
+
+const typeIcon = { strength: '💪', pilates: '🧘', cardio: '🏃', rest: '🌿', combo: '⚡' };
+
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => {
+    if (t.getAttribute('onclick').includes(id)) t.classList.add('active');
+  });
+  if (id !== 'days') {
+    document.getElementById('day-detail').style.display = 'none';
+    document.getElementById('days-list').style.display = 'block';
+  }
+}
+
+function openDay(i) {
+  const d = DAYS_DATA[i];
+  showTab('days');
+  document.getElementById('days-list').style.display = 'none';
+  const det = document.getElementById('day-detail');
+  det.style.display = 'block';
+  const totalKcal = d.meals.reduce((s, m) => s + m.kcal, 0);
+
+  det.innerHTML = `
+    <div class="back-btn" onclick="backToDays()">← Назад к расписанию</div>
+    <div class="day-header-bar">
+      <div class="day-circle ${d.typeClass}">${typeIcon[d.type]}</div>
+      <div class="day-header-info">
+        <h2>${d.label}</h2>
+        <div class="day-meta">${d.date} · ${d.typeLabel}</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon" style="background:var(--violet-light)">💪</div>
+        <div class="card-title">Тренировка</div>
+      </div>
+      <div class="card-body">
+        <ul class="exercise-list">
+          ${d.exercises.map(e => `<li class="exercise-item"><span class="ex-name">${e.name}</span><span class="ex-sets">${e.sets}</span></li>`).join('')}
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon" style="background:var(--teal-light)">🥗</div>
+        <div class="card-title">Питание дня</div>
+      </div>
+      <div class="card-body">
+        <div class="meal-list">
+          ${d.meals.map(m => `<div class="meal-item"><div class="meal-time-lbl">${m.time}</div><div class="meal-desc">${m.food}</div><div class="meal-kcal-lbl">${m.kcal} кк</div></div>`).join('')}
+        </div>
+        <div class="meal-total-row">Итого дня: <strong>${totalKcal} ккал</strong></div>
+      </div>
+    </div>
+  `;
+}
+
+function backToDays() {
+  document.getElementById('day-detail').style.display = 'none';
+  document.getElementById('days-list').style.display = 'block';
+}
+
+// ── DIARY ──
+const diaryDates = [
+  "1 мая · чт", "2 мая · пт", "3 мая · сб", "4 мая · вс",
+  "5 мая · пн", "6 мая · вт", "7 мая · ср", "8 мая · чт",
+  "9 мая · пт", "10 мая · сб", "11 мая · вс"
+];
+const diaryLabels = DAYS_DATA.map(d => d.label + ' — ' + d.typeLabel);
+
+function buildDiary() {
+  const c = document.getElementById('diary-container');
+  diaryDates.forEach((date, i) => {
+    const stored = loadDiary(i);
+    const div = document.createElement('div');
+    div.className = 'diary-day';
+    div.innerHTML = `
+      <div class="diary-date-label">${date} · ${DAYS_DATA[i].label}</div>
+      <div class="diary-card">
+        <div class="diary-metrics">
+          <div class="metric-box"><label>Вес утром</label><input type="number" step="0.1" placeholder="кг" id="d${i}-weight" value="${stored.weight||''}"></div>
+          <div class="metric-box"><label>Ккал за день</label><input type="number" step="10" placeholder="ккал" id="d${i}-kcal" value="${stored.kcal||''}"></div>
+          <div class="metric-box"><label>Шаги</label><input type="number" step="100" placeholder="шт" id="d${i}-steps" value="${stored.steps||''}"></div>
+        </div>
+
+        <div class="diary-row">
+          <div class="diary-label">Вода (стаканы по 250мл)</div>
+          <div class="water-track" id="d${i}-water">
+            ${Array.from({length:8}, (_, w) => `<div class="water-drop ${stored.water && stored.water>w ? 'filled':''}" onclick="toggleWater(${i},${w})">💧</div>`).join('')}
+          </div>
+        </div>
+
+        <div class="diary-row">
+          <div class="diary-label">Настроение</div>
+          <div class="mood-row">
+            ${[['😫','Плохо'],['😐','Норм'],['🙂','Хорошо'],['😄','Отлично']].map((m,mi) =>
+              `<div class="mood-btn ${stored.mood===mi?'selected':''}" onclick="selectMood(${i},${mi})">${m[0]}<div class="emoji-lbl">${m[1]}</div></div>`
+            ).join('')}
+          </div>
+        </div>
+
+        <div class="diary-row">
+          <div class="diary-label">Выполнено сегодня</div>
+          <div class="diary-checks">
+            ${[['зарядка','Зарядка'],['тренировка','Тренировка'],['прогулка','Прогулка'],['вода','2л воды'],['ужин20','Ужин до 20:00'],['сон','Сон 7+ часов']].map(([k,lbl]) =>
+              `<div class="check-pill ${stored.checks&&stored.checks.includes(k)?'checked':''}" onclick="toggleCheck(${i},'${k}')"><span class="pill-icon">${stored.checks&&stored.checks.includes(k)?'✓':''}</span>${lbl}</div>`
+            ).join('')}
+          </div>
+        </div>
+
+        <div class="diary-row">
+          <div class="diary-label">Заметки дня</div>
+          <textarea class="diary-note" id="d${i}-note" placeholder="Как прошёл день? Самочувствие, что съели, впечатления...">${stored.note||''}</textarea>
+        </div>
+
+        <button class="save-btn" onclick="saveDiary(${i})">Сохранить день</button>
+        <div class="saved-msg" id="d${i}-saved">Сохранено ✓</div>
+      </div>
+    `;
+    c.appendChild(div);
+  });
+}
+
+function loadDiary(i) {
+  try { return JSON.parse(localStorage.getItem('diary_' + i)) || {}; } catch(e) { return {}; }
+}
+
+function saveDiary(i) {
+  const stored = loadDiary(i);
+  stored.weight = document.getElementById('d'+i+'-weight').value;
+  stored.kcal = document.getElementById('d'+i+'-kcal').value;
+  stored.steps = document.getElementById('d'+i+'-steps').value;
+  stored.note = document.getElementById('d'+i+'-note').value;
+  localStorage.setItem('diary_' + i, JSON.stringify(stored));
+  const msg = document.getElementById('d'+i+'-saved');
+  msg.classList.add('show');
+  setTimeout(() => msg.classList.remove('show'), 2000);
+}
+
+function toggleWater(i, w) {
+  const stored = loadDiary(i);
+  stored.water = (stored.water || 0) === w + 1 ? w : w + 1;
+  localStorage.setItem('diary_' + i, JSON.stringify(stored));
+  const drops = document.querySelectorAll('#d'+i+'-water .water-drop');
+  drops.forEach((d, di) => d.classList.toggle('filled', di < stored.water));
+}
+
+function selectMood(i, mi) {
+  const stored = loadDiary(i);
+  stored.mood = mi;
+  localStorage.setItem('diary_' + i, JSON.stringify(stored));
+  document.querySelectorAll('#tab-diary .diary-card').forEach((card, ci) => {
+    if (ci === i) {
+      card.querySelectorAll('.mood-btn').forEach((b, bi) => b.classList.toggle('selected', bi === mi));
+    }
+  });
+}
+
+function toggleCheck(i, key) {
+  const stored = loadDiary(i);
+  stored.checks = stored.checks || [];
+  const idx = stored.checks.indexOf(key);
+  if (idx > -1) stored.checks.splice(idx, 1);
+  else stored.checks.push(key);
+  localStorage.setItem('diary_' + i, JSON.stringify(stored));
+  const cards = document.querySelectorAll('#tab-diary .diary-card');
+  const pills = cards[i].querySelectorAll('.check-pill');
+  const keys = ['зарядка','тренировка','прогулка','вода','ужин20','сон'];
+  pills.forEach((p, pi) => {
+    const k = keys[pi];
+    const on = stored.checks.includes(k);
+    p.classList.toggle('checked', on);
+    p.querySelector('.pill-icon').textContent = on ? '✓' : '';
+  });
+}
+
+// ── MEASUREMENTS ──
+function saveMeas() {
+  const fields = ['weight-start','waist-start','hips-start','chest-start','weight-end','waist-end','hips-end','chest-end','w4','w7','w10','w11'];
+  const data = {};
+  fields.forEach(f => data[f] = document.getElementById('m-'+f).value);
+  localStorage.setItem('measurements', JSON.stringify(data));
+  updateProgress();
+}
+
+function loadMeas() {
+  try {
+    const data = JSON.parse(localStorage.getItem('measurements')) || {};
+    ['weight-start','waist-start','hips-start','chest-start','weight-end','waist-end','hips-end','chest-end','w4','w7','w10','w11'].forEach(f => {
+      const el = document.getElementById('m-'+f);
+      if (el && data[f]) el.value = data[f];
+    });
+    updateProgress();
+  } catch(e) {}
+}
+
+function updateProgress() {
+  const start = parseFloat(document.getElementById('m-weight-start').value);
+  const end = parseFloat(document.getElementById('m-weight-end').value);
+  if (!isNaN(start) && !isNaN(end)) {
+    const goal = start - 2.5;
+    const diff = start - end;
+    const pct = Math.min(100, Math.max(0, Math.round((diff / (start - goal)) * 100)));
+    document.getElementById('progress-section').style.display = 'block';
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = `−${diff.toFixed(1)} кг (${pct}%)`;
+  }
+}
+
+buildDiary();
+loadMeas();
+</script>
+</body>
+</html>
